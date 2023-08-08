@@ -1,0 +1,63 @@
+<div class="d-flex flex-row bd-highlight mb-3">
+  <div class="p-2 w-50 bd-highlight">
+    <input type="text" class="form-control" [(ngModel)]="EmployeeId">
+    <div class="mb-12">
+       <label class="form-label">Employee Name</label>
+        <input type="text" class="form-control" [(ngModel)]="EmployeeName">
+    </div>
+    <div class="invalid-feedback">Name is required.</div>
+
+    <div class="mb-12">
+      <label class="form-label">Employee Joining Date</label>
+      <input type="date" class="form-control" [(ngModel)]="DateOfJoining">
+    </div>
+   
+
+    <div class="mb-12">
+      <label class="form-label">Employee Position</label>
+      <input type="text" class="form-control" [(ngModel)]="EmployeePosition">
+    </div>
+
+    <div class="mb-12">
+      <label class="form-label">Employee Salary</label>
+      <input type="text" class="form-control" [(ngModel)]="EmployeeSalary">
+    </div>
+
+    <div class="mb-12">
+      <label class="form-label">Department Id</label>
+      <input type="text" class="form-control" [(ngModel)]="DepartmentId">
+    </div>
+    </div>
+</div>
+
+<button type="button" (click)="createEmployee()" *ngIf="emp.EmployeeId=='0'" class="btn btn-primary">
+  Create
+</button>
+
+<button type="button" (click)="updateEmployee()" *ngIf="emp.EmployeeId!='0'" class="btn btn-primary">
+  Update
+</button>
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <!-- <div class="input-group mb-3">
+        <span class="input-group-text">Department</span>
+        <select class="form-select" [(ngModel)]="Department">
+          <option>--Select--</option>
+          <option *ngFor="let dep of DepartmentList">
+            {{dep.DepartmentName}}
+          </option>
+        </select>
+      </div> -->
+
+  

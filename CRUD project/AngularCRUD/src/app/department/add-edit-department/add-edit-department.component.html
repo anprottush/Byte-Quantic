@@ -1,0 +1,30 @@
+<div class="d-flex flex-row bd-highlight mb-3">
+  <div class="p-2 w-50 bd-highlight">
+    <input type="text" class="form-control" [(ngModel)]="DepartmentId">
+    <div class="mb-12">
+       <label class="form-label">Department Name</label>
+        <input type="text" class="form-control" [(ngModel)]="DepartmentName">
+    </div>
+    <div class="invalid-feedback">Name is required.</div>
+
+    <div class="mb-12">
+      <label class="form-label">Department Location</label>
+      <input type="text" class="form-control" [(ngModel)]="DepartmentLocation">
+    </div>
+
+    <div class="mb-12">
+      <label class="form-label">Department Description</label>
+      <input type="text" class="form-control" [(ngModel)]="DepartmentDescription">
+    </div>
+
+    </div>
+</div>
+  
+  <button (click)="createDepartment()" *ngIf="depart.DepartmentId == 0" class="btn btn-primary">
+    Create
+  </button>
+  
+  <button (click)="updateDepartment()" *ngIf="depart.DepartmentId !=0" class="btn btn-primary">
+    Update
+  </button>
+  <!-- <button type="submit">{{ departmentForm.value.id ? 'Update' : 'Create' }}</button> -->
