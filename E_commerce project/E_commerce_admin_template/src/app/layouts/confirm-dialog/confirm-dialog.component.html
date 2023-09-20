@@ -1,0 +1,18 @@
+<div *ngIf="message" class="modal" tabindex="-1" role="dialog" style="display:block!important">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div *ngIf="message?.type == 'confirm'" class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="text-center confirm-message">{{message.text}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    (click)="message.noFn()">No</button>
+                <button type="button" class="btn btn-danger" (click)="message.yesFn()">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>

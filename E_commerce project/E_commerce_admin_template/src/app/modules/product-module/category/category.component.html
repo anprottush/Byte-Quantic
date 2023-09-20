@@ -1,0 +1,167 @@
+  <main id="main" class="main">
+   <div class="pagetitle">
+  <h1>Category</h1>
+  <nav>
+  <ol class="breadcrumb">
+  <li class="breadcrumb-item"><a routerLink="/">Product</a></li>
+  <li class="breadcrumb-item active">Category</li>
+  </ol>
+  </nav>
+  </div>
+
+  <button mat-raised-button data-bs-toggle="modal" data-bs-target="#modalOpen" (click)="addClick()">Add New</button> 
+
+  <br><br>
+  <mat-card>
+  <mat-card-header>
+  <mat-form-field>
+  <mat-label>Filter</mat-label>
+  <input matInput placeholder="Filter" (keyup)="Filterchange($event)">
+  </mat-form-field>
+  </mat-card-header>
+  <mat-card-content>
+
+  <table mat-table matSort [dataSource]="dataSource" >
+
+  <ng-container matColumnDef="id">
+  <th mat-header-cell mat-sort-header *matHeaderCellDef> Id </th>
+  <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="categoryName">
+  <th mat-header-cell mat-sort-header *matHeaderCellDef> Name </th>
+  <td mat-cell *matCellDef="let element"> {{element.categoryName}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="motherCategoryId">
+  <th mat-header-cell mat-sort-header *matHeaderCellDef> Mother CategoryId </th>
+  <td mat-cell *matCellDef="let element"> {{element.motherCategoryId}} </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="description">
+  <th mat-header-cell *matHeaderCellDef> Description </th>
+  <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="imageUrl">
+  <th mat-header-cell *matHeaderCellDef> Image </th>
+  <td mat-cell *matCellDef="let element"> {{element.imageUrl}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="action">
+  <th mat-header-cell *matHeaderCellDef> Actions </th>
+  <td mat-cell *matCellDef="let element"> <button mat-raised-button color="primary" data-bs-toggle="modal" data-bs-target="#modalOpen" (click)="editClick(element)" data-backdrop="static" data-keyboard="false">Edit</button> | 
+  <button mat-raised-button color="warn" (click)="showDialog(element)">Delete</button> </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  </table>
+
+  </mat-card-content>
+  <mat-card-footer>
+  <mat-paginator [pageSizeOptions]="[10,20]" showFirstLastButtons>
+
+  </mat-paginator>
+  </mat-card-footer>
+  </mat-card>
+
+  </main>
+
+
+  <!-- <div class="modal fade" id="modalOpen" tabindex="-1" data-bs-backdrop="false" >
+  <div class="modal-dialog">
+  <div class="modal-content">
+  <div class="modal-header">
+  <h5 class="modal-title">{{ ActivateAddEditForm ? 'Create Category' : 'Edit Category' }}</h5>
+  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+  <form class="row g-3" [formGroup]="myForm">
+  <div class="col-12"> <label for="categoryName" class="form-label">Category Name</label>
+  <input type="text" class="form-control" formControlName="categoryName" [value]="ActivateAddEditForm?'':categoryName" >
+  </div>
+  <div class="col-12"> 
+  <label for="motherCategoryId">Select Primary Category</label>  
+  <select formControlName="motherCategoryId" class="form-control" [value]="ActivateAddEditForm?'':motherCategoryId">  
+      <option *ngFor="let val of categoryList" [value]="val.id">{{val.categoryName}}</option>  
+  </select>  
+  </div>
+  <div class="col-12"> <label for="description" class="form-label">Description</label>
+  <input type="text" class="form-control" formControlName="description" [value]="ActivateAddEditForm?'':description">
+  </div>
+  <div class="col-12">
+  <label for="imageUrl" class="form-label">Image</label>
+  <input type="text" class="form-control" formControlName="imageUrl" [value]="ActivateAddEditForm?'':imageUrl">
+  </div>
+  </form>
+  </div>
+
+  <div class="modal-footer">
+  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+  <button type="submit" class="btn btn-success" (click)="onSubmit()">{{ActivateAddEditForm ? 'Create' : 'Update' }}</button>
+  </div>  
+  </div>
+  </div>
+  </div> -->
+
+
+  <div class="modal fade" id="modalOpen" tabindex="-1" data-bs-backdrop="false" >
+    <div class="modal-dialog">
+    <div class="modal-content">
+    <div class="modal-header">
+    <h5 class="modal-title">{{ ActivateAddEditForm ? 'Create Category' : 'Edit Category' }}</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+    <form class="row g-3" [formGroup]="myForm" (ngSubmit)="DataSave(myForm)" > 
+    <div class="col-12"> 
+      <mat-form-field appearance="outline" >
+        <mat-label>Name</mat-label>
+        <input matInput type="text" formControlName="categoryName" [value]="ActivateAddEditForm?'':categoryName" >
+        </mat-form-field>
+    </div>
+    <div class="col-12"> 
+      <mat-form-field appearance="outline">
+        <mat-label>Select Primary Category</mat-label>
+        <mat-select formControlName="motherCategoryId" [value]="ActivateAddEditForm? null :motherCategoryId">
+        <mat-option>None</mat-option>
+        <mat-option *ngFor="let val of categoryList" [value]="val.id">{{val.categoryName}}
+        </mat-option>
+        </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="col-12"> 
+      <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
+        <input matInput type="text" formControlName="description" [value]="ActivateAddEditForm?'':description">
+        </mat-form-field>
+    </div>
+    <div class="col-12">
+      <mat-form-field appearance="outline">
+        <mat-label>Image</mat-label>
+        <input matInput type="text" formControlName="imageUrl" [value]="ActivateAddEditForm?'':imageUrl">
+        </mat-form-field>
+
+        <!-- <mat-form-field appearance="outline">
+          <mat-label>Image</mat-label>
+          <input matInput type="file" formControlName="imageUrl" (change)="onFileSelected($event)">
+        </mat-form-field> -->
+   
+    </div>
+    
+    
+  
+    <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    <button type="submit" class="btn btn-success">{{ActivateAddEditForm ? 'Create' : 'Update' }}</button>
+    </div> 
+  </form>  
+</div>
+    </div>
+    </div>
+    </div>

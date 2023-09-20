@@ -1,0 +1,14 @@
+table {
+    width: 100%;
+  }
+  
+  th.mat-sort-header-sorted {
+    color: black;
+  }
+  img{
+    width: 30px;
+    height: 30px;
+  }
+  input[type=file]{
+    display: none;
+  }

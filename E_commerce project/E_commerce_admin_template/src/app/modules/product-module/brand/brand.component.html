@@ -1,0 +1,137 @@
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Brand</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/">Product</a></li>
+        <li class="breadcrumb-item active">Brand List</li>
+      </ol>
+    </nav>
+  </div>
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <p>Brand</p>
+            <button type="button" class="btn btn-primary rounded-pill" data-bs-toggle="modal"
+              data-bs-target="#modalOpen" (click)="addClick()">Create
+            </button>
+              <mat-card>
+                <mat-card-header>
+                  <mat-form-field>
+                    <mat-label>Filter</mat-label>
+                    <input matInput placeholder="Search" (keyup)="Filterchange($event)">
+                  </mat-form-field>
+                </mat-card-header>
+                <mat-card-content>
+                  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+                <ng-container matColumnDef="id">
+                  <th class="bg-dark text-white" mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+                  <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="brandname">
+                  <th class="bg-dark text-white" mat-header-cell *matHeaderCellDef mat-sort-header>Brand Name</th>
+                  <td mat-cell *matCellDef="let element"> {{element.brandName}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="branddescription">
+                  <th class="bg-dark text-white" mat-header-cell *matHeaderCellDef mat-sort-header>Brand Description</th>
+                  <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="imageUrl">
+                  <th class="bg-dark text-white" mat-header-cell *matHeaderCellDef mat-sort-header >Brand Image</th>
+                  <td mat-cell *matCellDef="let element">
+                    <label for="fileInput{{element.id}}" style="cursor: pointer;">
+                    <img *ngIf="element.imageUrl; else dummyImage" [src]="element.imageUrl" alt="brand image">
+                    <ng-template #dummyImage>
+                      <img src="/assets/img/favicon.png" alt="brand image"> 
+                    </ng-template>
+                  </label>
+                    <input id="fileInput{{element.id}}" type="file"  accept="image/*"  (change)="uploadImage($event, element)">
+                  </td>
+                </ng-container>
+                
+                <ng-container matColumnDef="action">
+                  <th class="bg-dark text-white" mat-header-cell *matHeaderCellDef>Action</th>
+                  <td mat-cell *matCellDef="let element">
+                    <button type="button" class="btn btn-warning rounded-pill" mat-raised-button color="warn" data-bs-toggle="modal" data-bs-target="#modalOpen"
+                    (click)="editClick(element)" data-backdrop="static" data-keyboard="false"><i class="bi bi-pen"></i>Edit
+                    </button>
+                    
+                    <button type="button" class="btn btn-danger rounded-pill" mat-raised-button color="danger" (click)="deleteClick(element)"><i
+                      class="bi bi-trash"></i>Delete
+                    </button>
+
+                    <!-- <button type="button" class="btn btn-primary rounded-pill" mat-raised-button color="primary" (click)="uploadPhoto(element)"><i
+                      class="bi bi-trash"></i>Upload
+                    </button> -->
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              </table>
+
+            </mat-card-content>
+            <mat-card-footer>
+              <mat-paginator [pageSizeOptions]="[3,5,10,20]" showFirstLastButtons>
+              </mat-paginator>
+            </mat-card-footer>
+          </mat-card>
+        </div>  
+      </div>
+    </div>
+  </div>
+</section>
+
+  <div id="overlay" *ngIf="loading">
+    <div class="spinner"></div>
+    <br />
+    Please wait...
+  </div>
+</main>
+
+
+<div class="modal fade" id="modalOpen" tabindex="-1" data-bs-backdrop="false" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ ActivateAddEditForm ? 'Brand Create' : 'Brand Edit' }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+         <form class="row g-3" [formGroup]="brandForm" autocomplete="off" enctype="multipart/form-data" novalidate>
+
+          <div class="col-12"> 
+            <label for="brandName" class="form-label">Brand Name</label>
+            <input type="text" class="form-control" formControlName="brandName" [value]="ActivateAddEditForm ? '' : brandname" required>
+          </div>
+
+          <div class="col-12"> 
+            <label for="brandDescription" class="form-label">Brand Description</label>
+            <input type="text" class="form-control" formControlName="brandDescription" [value]="ActivateAddEditForm ? '' : branddescription" required>
+          </div>
+
+          <!-- <div class="col-12">
+            <label for="brandImage" class="form-label">Image</label>
+            <input type="file" class="form-control" accept="image/*" formControlName="brandImage" (change)="uploadPhoto($event)"> 
+          </div> -->
+
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success" (click)="onSubmit()">{{ ActivateAddEditForm ? 'Create' : 'Update' }}</button>
+      </div>
+
+      <!-- <div class="mb-1">
+        {{brandForm.value.Id | json}}
+      </div> -->
+    </div>
+  </div>
+</div>
+
