@@ -1,0 +1,200 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+        <mat-card>
+            <mat-card-content>
+                <mat-card-title class="page-reasons__title">
+                    <mat-icon class="page-reasons__title__icon">
+                        tune
+                    </mat-icon>
+                    {{ id ? 'Edit Product' : 'Create Product' }}
+                </mat-card-title>
+
+                <mat-divider></mat-divider>
+                <p class="h5 text-center">Product Information</p><br>
+                <form class="page-reasons__box container-fluid" #detailsForm="ngForm" [formGroup]="form"
+                    (ngSubmit)="validateForm(form)">
+
+                    
+                    <mat-form-field class="example-full-width">
+                    <mat-label>Category</mat-label>
+                    <mat-select formControlName="categoryId" required>
+                      <mat-option>
+                        <ngx-mat-select-search formControlName="categoryId"></ngx-mat-select-search> 
+                      </mat-option>
+                          
+                       <!-- <input matInput formControlName="categoryId" #input>                    -->
+                       <mat-option>None</mat-option>
+                       <mat-option *ngFor="let val of categoryList " [value]="val.id">
+                        {{val.categoryName}}
+                      </mat-option> 
+                   </mat-select>
+                  </mat-form-field>
+
+
+
+
+
+
+                    <!-- <div class="container">
+                        <div class="row">
+                          <div class="col-md-4">
+                            <mat-form-field class="w-100" appearance="fill">
+                                <mat-label>Category</mat-label>
+                                <mat-select formControlName="categoryId" required>
+                                      <ngx-mat-select-search formControlName="categoryId"></ngx-mat-select-search> 
+                                   <input matInput formControlName="categoryId" #input>                   
+                                   <mat-option>None</mat-option>
+                                   <mat-option *ngFor="let val of categoryList " [value]="val.id">
+                                    {{val.categoryName}}
+                                  </mat-option> 
+                               </mat-select>
+                               <mat-error *ngIf="form.hasError('required', 'categoryId')">
+                                   Please select a category
+                               </mat-error> 
+                            </mat-form-field>
+                          </div>
+
+                          <div class="col-md-4">
+                            <mat-form-field class="w-100" appearance="fill">
+                                <mat-label>Brand</mat-label>
+                                <mat-select formControlName="brandId" required>
+                                 <input matInput formControlName="brandId" >
+                                    <mat-option>None</mat-option>
+                                    <mat-option *ngFor="let val of brandList" [value]="val.id">
+                                        {{val.brandName}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="form.hasError('required', 'brandId')">
+                                    Please select a brand
+                                </mat-error> 
+                            </mat-form-field>
+                          </div>
+
+                          <div class="col-md-4">
+                            <mat-form-field class="w-100" appearance="fill">
+                                <mat-label>Product Name</mat-label>
+                                <input matInput formControlName="productName">
+                                <mat-error *ngIf="form.hasError('required', 'productName')">
+                                    Product Name is required
+                                </mat-error>
+                            </mat-form-field>
+                          </div>
+                        </div>
+
+
+                        <div class="row">
+                          <div class="col-md-4">
+                            <mat-form-field class="w-100" appearance="fill">
+                                <mat-label>Description</mat-label>
+                                <input matInput formControlName="description">
+                            </mat-form-field>
+                          </div>
+
+                          <div class="col-md-4">
+                            <mat-form-field class="w-100" appearance="fill">
+                                <mat-label>Unit Type</mat-label>
+                                <mat-select formControlName="unitType" required>
+                                  <mat-option>None</mat-option>
+                                  <mat-option *ngFor="let unit of getUnit() | keyvalue" [value]="unit.key">
+                                    {{unit.value}}
+                                  </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="form.hasError('required', 'unitType')">
+                                    Please select a unit type   
+                                </mat-error>
+                            </mat-form-field>
+                          </div>
+
+                          <div class="col-md-4">
+                            <mat-form-field class="w-100" appearance="fill">
+                                <mat-label>Volume Unit Type</mat-label>
+                                <mat-select formControlName="volumeUnitType" required>
+                                  <mat-option>None</mat-option>
+                                  <mat-option *ngFor="let volume of getVolume() | keyvalue" [value]="volume.key">
+                                    {{volume.value}}
+                                  </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="form.hasError('required', 'volumeUnitType')">
+                                    Please select a volume unit type
+                                </mat-error>
+                            </mat-form-field>
+                          </div>
+                        </div>
+
+
+                        <div class="row">
+                          <div class="col-md-4">
+                            <mat-form-field class="w-100" appearance="fill">
+                                <mat-label>Weight Unit Type</mat-label>
+                                <mat-select formControlName="weightUnitType" required>
+                                  <mat-option>None</mat-option>
+                                  <mat-option *ngFor="let weight of getWeight() | keyvalue" [value]="weight.key">
+                                    {{weight.value}}
+                                  </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="form.hasError('required', 'weightUnitType')">
+                                    Please select a weight unit type
+                                </mat-error>
+                            </mat-form-field>
+                           </div><mat-form-field class="page-reasons__filter__input" appearance="fill"></mat-form-field>
+                          
+                           <div class="col-md-4">
+                            <mat-form-field class="w-100" appearance="fill">
+                                <mat-label>Length Unit Type</mat-label>
+                                <mat-select formControlName="lengthUnitType" required>
+                                  <mat-option>None</mat-option>
+                                  <mat-option *ngFor="let Length of getLength() | keyvalue" [value]="Length.key">
+                                    {{Length.value}}
+                                  </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="form.hasError('required', 'lengthUnitType')">
+                                    Please select a length unit type
+                                </mat-error>
+                            </mat-form-field>
+                          </div>
+                          
+                          <div class="col-md-4">
+                            <mat-form-field class="w-100" appearance="fill">
+                                <mat-label>SKU</mat-label>
+                                <input matInput formControlName="sku">
+                                <mat-error *ngIf="form.hasError('required', 'sku')">
+                                    Sku is required
+                                </mat-error>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                      </div> -->
+
+
+   
+                            
+                
+                    <div class="page-reasons__actions">
+                        <div [hidden]="!loading"><mat-spinner [diameter]="36"></mat-spinner></div>
+                        <button [ngClass]="[id ? 'page-reasons__actions__update' : 'page-reasons__actions__create']"
+                            mat-flat-button color="primary" type="submit" [disabled]="loading">
+                            {{ id ? 'Save' : 'Create' }}
+                        </button>
+                        <button id="more" *ngIf="!id" mat-flat-button color="primary" type="button" [matMenuTriggerFor]="menu"
+                            [disabled]="loading">
+                            <mat-icon>expand_more</mat-icon> Add More
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <button (click)="willCreateAnother($event)" type="submit" mat-menu-item>
+                                Create and Add Another
+                            </button>
+                        </mat-menu>
+                        <button (click)="navigate('/product/product')" type="button" mat-button [disabled]="loading">
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+            </mat-card-content>
+        </mat-card>
+        {{detailsForm.value | json}}
+        
+        <p>
+         
+        </p>
+    </div>
+</main>

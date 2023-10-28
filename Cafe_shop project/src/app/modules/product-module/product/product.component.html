@@ -1,0 +1,95 @@
+<main id="main" class="main">
+  <div class="pagetitle">
+
+    <mat-card appearance="outlined">
+      <mat-card-content>
+        <div class="row justify-content-between mb-4">
+          <div class="col-auto">
+            <mat-form-field class="page-reasons__filter__input" appearance="fill">
+              <mat-icon matSuffix>search</mat-icon>
+              <mat-label>Search</mat-label>
+              <input matInput [(ngModel)]="filter" (keyup)="applyFilter($event)" #input>
+            </mat-form-field>
+          </div>
+          <div class="col-auto">
+            <button (click)="goToCreatePage()" color="primary" mat-flat-button>
+              + ADD NEW
+            </button>
+          </div>
+        </div>
+
+        <table mat-table matSort matSortActive="name" matSortDirection="asc" [dataSource]="table">
+
+          <ng-container matColumnDef="productName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Product</th>
+            <td mat-cell *matCellDef="let element">{{element.productName}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
+            <td mat-cell *matCellDef="let element">{{element.description}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="imageUrl">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Image</th>
+            <td mat-cell *matCellDef="let element">
+              <label id="imagelabel" for="fileinput{{element.id}}">
+                <img *ngIf="element.imageUrl; else dummyImage" [src]="element.imageUrl" [alt]="element.productName">
+                <ng-template #dummyImage>
+                  <img src="/assets/img/favicon.png" [alt]="element.productName"  />
+                </ng-template>
+              </label>
+              <input id="fileinput{{element.id}}" type="file" accept="image/*" (change)="uploadImage($event, element)">
+            </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>
+              Actions
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <button (click)="goToEditPage(element)" #tooltip="matTooltip" matTooltip="Edit" matTooltipPosition="left"
+                matTooltipClass="page-reasons__table__actions__tooltip" mat-icon-button>
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button (click)="deleteReason(element)" matTooltip="Delete" matTooltipPosition="left"
+                matTooltipClass="page-reasons__table__actions__tooltip" mat-icon-button>
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="isActive">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Activate</th>
+            <td mat-cell *matCellDef="let element">
+              <div class="d-flex">
+                <div>
+                  <mat-slide-toggle color="primary" (change)="toogleActive(element)"
+                    [checked]="element.isActive"></mat-slide-toggle>
+                </div>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="columns"></tr>
+          <tr mat-row *matRowDef="let element; columns: columns;" [ngClass]="{ 'disabled-row': !element.isActive }"></tr>
+
+          <!-- Row shown when there is no matching data. -->
+          <tr class="mat-row" *matNoDataRow>
+            <td *ngIf="!loading " class="mat-cell" [colSpan]="columns.length">No matching records found</td>
+          </tr>
+        </table>
+
+        <div *ngIf="loading" id="spinner">
+          <mat-progress-spinner diameter="30" color="primary" mode="indeterminate">
+          </mat-progress-spinner>
+        </div>
+
+        <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons>
+        </mat-paginator>
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+</main>

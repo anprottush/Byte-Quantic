@@ -1,0 +1,99 @@
+.modal-body mat-form-field {
+    width: 100%;
+  }
+  ::ng-deep .cdk-overlay-container {
+    z-index: 9999;
+}
+img{
+  height: 50px;
+  width: 50px;
+}
+#imagelabel{
+  cursor: pointer;
+}
+input[type=file]{
+  display: none;
+}
+#spinner{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: white;
+}
+.disabled-row {
+  background-color: #eee; 
+  opacity: 0.6; 
+  pointer-events: none; 
+}
+#more{
+  margin-left: 5px;
+  width: 126px;
+}
+
+.snackbar {
+  position: absolute;
+  top: 60px;
+}
+
+
+
+
+
+
+
+/*main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+   background-color: #f0f0f0; 
+  
+  margin-left: 50%;
+}
+
+mat-card {
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -10px;
+  margin-left: -10px;
+}
+
+.col-12 {
+  flex: 0 0 100%;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+ .page-reasons__actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+} 
+
+mat-flat-button {
+  min-width: 120px;
+}
+
+mat-spinner {
+  margin-right: 10px;
+}
+
+.description-field{
+  height: 120px;
+  flex: auto;
+}*/
